@@ -9,20 +9,15 @@ pipeline {
             CI = true
         }
     stages {
-        stage('Build and Test') {
-            parallel {
-                stage('Build') { 
-                    steps {
-                        sh 'npm install' 
-                    }
-                }
-                stage('Test') {
-                    steps {
-                        sh './jenkins/scripts/test.sh'
-                    }   
-                }
+        stage('Build') { 
+            steps {
+                sh 'npm install' 
             }
-
+        }
+        stage('Test') {
+            steps {
+                sh './jenkins/scripts/test.sh'
+            }
         }
         stage('Deliver') {
             steps {
