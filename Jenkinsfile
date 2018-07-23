@@ -12,6 +12,9 @@ pipeline {
         stage('Build & Test') {
             parallel {
                 stage('Build') { 
+                    when {
+                        branch 'any'
+                    }
                     steps {
                         sh 'npm install' 
                     }
