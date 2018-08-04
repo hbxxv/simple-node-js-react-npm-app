@@ -28,6 +28,7 @@ pipeline {
                     }
                 }
             }
+        echo "Feature-1 Build" 
         }
         stage('Deliver') {
             when {
