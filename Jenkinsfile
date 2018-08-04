@@ -26,7 +26,18 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
+        stage('Deliver-DEV') {
+            when {
+                branch 'DEV'
+            }
+            steps {
+                sh './jenkins/scripts/deliver.sh'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh './jenkins/scripts/kill.sh'
+            }
+            
+        }
+        stage('Deliver-Master') {
             when {
                 branch 'master'
             }
