@@ -32,7 +32,8 @@ pipeline {
             }
             steps {
                 script {
-                    env['GIT_MSG'] = sh(script: "git log --pretty=%s -1", returnStdout: true).trim()
+                    //env['GIT_MSG'] = sh(script: "git log --pretty=%s -1", returnStdout: true).trim()
+                    env['GIT_MSG'] = sh 'git log --pretty=%s -1'
                     env['GIT_COMMIT'] = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
                     env['GIT_AUTHOR'] = sh(script: "git --no-pager show -s --format='%an' \${GIT_COMMIT}", returnStdout: true).trim()
                 }
