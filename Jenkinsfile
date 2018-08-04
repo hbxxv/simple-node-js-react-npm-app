@@ -40,7 +40,7 @@ pipeline {
             script {
                 env['GIT_MSG'] = sh(script: "git log --pretty=%s -1", returnStdout: true).trim()
                 env['GIT_COMMIT'] = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
-                env['GIT_AUTHOR'] = sh(script: "git --no-pager show -s --format='%an $(GIT_COMMIT)", returnStdout: true).trim()
+                env['GIT_AUTHOR'] = sh(script: "git --no-pager show -s --format='%an' $(GIT_COMMIT)", returnStdout: true).trim()
             }
             echo "The commit $(GIT_COMMIT) was authored by $(GIT_AUTHOR). Commit message was \"$(GIT_MSG)\"
         }
