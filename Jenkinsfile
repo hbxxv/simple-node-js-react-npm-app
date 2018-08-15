@@ -58,7 +58,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'npm install'
+                sh 'npm install --no-bin-links'
             }
         }
         stage('Test') {
