@@ -30,6 +30,8 @@ def notifySlack(text, channel, attachments) {
     sh "curl -X POST --data-urlencode \'payload=${payload}\' ${slackURL}"
 }
 
+def slackNotificationChannel = "#spam"
+
 pipeline {
     agent {
         docker {
