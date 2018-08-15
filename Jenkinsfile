@@ -79,6 +79,7 @@ pipeline {
     post {
         always {
            /* Use slackNotifier.groovy from shared library and provide current build result as parameter */
+           echo 'I will always say Hello again!'
            slackNotifier(currentBuild.currentResult)
            cleanWs()
         }
