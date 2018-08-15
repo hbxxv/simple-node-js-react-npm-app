@@ -79,7 +79,8 @@ pipeline {
     post {
         always {
             echo 'I will always say Hello again!'
-            //notifySlack("Success!", slackNotificationChannel, [])
+            getLastCommitMessage()
+            getGitAuthor()
             notifySlack("", slackNotificationChannel, [
             [
                 title: "${env.JOB_NAME}, build #${env.BUILD_NUMBER}",
