@@ -13,17 +13,26 @@ pipeline {
             parallel {
                 stage('Build') { 
                     steps {
-                        sh 'npm install' 
+                        sh 'npm install'
                     }
                 }
                 stage('Test') {
-                    when {
-                        branch 'master'
-                    }
                     steps {
                         sh './jenkins/scripts/test.sh'
                     }
                 }
+		stage('Print Info') {
+		   steps {
+			sh 'echo $BUILD_NUMBER-$GIT_COMMIT'
+			sh 'export REVISION_ID=$BUILD_NUMBER-$GIT_COMMIT'
+			sh 'echo $REVISION_ID'	
+		   }
+		}
+            }
+        }
+        stage('Sonar-Anal') {
+            when {
+                anyOf { branch 'master'; branch 'DEV'; branch 'Staging'}
             }
         }
         stage('Deliver-DEV') {
