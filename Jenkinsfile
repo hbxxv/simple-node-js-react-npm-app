@@ -67,7 +67,7 @@ pipeline {
             }
             steps {
                 echo "Skip Test"
-                //sh './jenkins/scripts/test.sh'
+                sh './jenkins/scripts/test.sh'
             }
         }
         stage('Deliver-Master') {
