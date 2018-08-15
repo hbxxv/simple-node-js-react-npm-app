@@ -27,7 +27,7 @@ def getGitAuthor = {
 }
 
 def getLastCommitMessage = {
-    message = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
+    message = sh(returnStdout: true, script: 'git log --pretty=%s -1 | xargs echo').trim()
 }
 
 def populateGlobalVariables = {
@@ -85,7 +85,7 @@ pipeline {
                 title: "${env.JOB_NAME}, build #${env.BUILD_NUMBER}",
                 title_link: "${env.BUILD_URL}",
                 color: "danger",
-                author_name: "${author}",
+                author_name: "${env.GIT_COMMITTER_NAME}",
                 text: "${currentBuild.currentResult}",
                 "mrkdwn_in": ["fields"],
                 fields: [
