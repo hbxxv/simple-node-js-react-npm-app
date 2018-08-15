@@ -75,13 +75,13 @@ pipeline {
                 //echo "The commit \${GIT_COMMIT} was authored by \${GIT_AUTHOR}. Commit message was \"\${GIT_MSG}\""
             }    
         }
-	post {
-            always {
-	       /* Use slackNotifier.groovy from shared library and provide current build result as parameter */   
-                slackNotifier(currentBuild.currentResult)
-                cleanWs()
-            }
-        }
     }
-
+    
+    post {
+        always {
+           /* Use slackNotifier.groovy from shared library and provide current build result as parameter */
+           slackNotifier(currentBuild.currentResult)
+           cleanWs()
+           }
+   }
 }
