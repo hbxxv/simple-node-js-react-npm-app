@@ -21,13 +21,14 @@ def notifySlack(text, channel, attachments) {
     sh "curl -X POST --data-urlencode \'payload=${payload}\' ${slackURL}"
 }
 
+
 def getGitAuthor = {
     def commit = sh(returnStdout: true, script: 'git rev-parse HEAD')
     author = sh(returnStdout: true, script: "git --no-pager show -s --format='%an' ${commit}").trim()
 }
 
 def getLastCommitMessage = {
-    message = sh(returnStdout: true, script: 'git log --pretty=%s -1 | xargs echo').trim()
+    message = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
 }
 
 def populateGlobalVariables = {
@@ -65,7 +66,8 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh './jenkins/scripts/test.sh'
+                echo "Skip Test"
+                //sh './jenkins/scripts/test.sh'
             }
         }
         stage('Deliver-Master') {
@@ -87,7 +89,7 @@ pipeline {
                 title: "${env.JOB_NAME}, build #${env.BUILD_NUMBER}",
                 title_link: "${env.BUILD_URL}",
                 color: "danger",
-                author_name: "${env.GIT_COMMITTER_NAME}",
+                author_name: "${author}",
                 text: "${currentBuild.currentResult}",
                 "mrkdwn_in": ["fields"],
                 fields: [
@@ -98,7 +100,7 @@ pipeline {
                     ],
                     [
                         title: "Last Commit:",
-                        value: "${env.message}",
+                        value: "${message}",
                         short: false
                     ]
                 ]
