@@ -83,7 +83,7 @@ pipeline {
                 title_link: "${env.BUILD_URL}",
                 color: "danger",
                 author_name: "${env.GIT_COMMITTER_NAME}",
-                text: "${buildResult}",
+                text: "${currentBuild.currentResult}",
                 fields: [
                     [
                         title: "Branch",
