@@ -21,7 +21,7 @@ def notifySlack(text, channel, attachments) {
     def jenkinsIcon = 'https://wiki.jenkins-ci.org/download/attachments/2916393/logo.png'
 
     def payload = JsonOutput.toJson([text: text,
-        channel: spam,
+        channel: channel,
         username: "Jenkins",
         icon_url: jenkinsIcon,
         attachments: attachments
@@ -30,7 +30,7 @@ def notifySlack(text, channel, attachments) {
     sh "curl -X POST --data-urlencode \'payload=${payload}\' ${slackURL}"
 }
 
-def slackNotificationChannel = "#spam"
+def slackNotificationChannel = "spam"
 
 pipeline {
     agent {
