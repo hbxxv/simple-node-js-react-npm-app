@@ -50,10 +50,9 @@ pipeline {
         stage('Intiliaze') {
             steps {
                 sh "apk update && apk add curl"
-                echo ${message}
-                echo ${env.message}
-                echo ${author}
-                echo ${env.author}
+                script {
+                    populateGlobalVariables()
+                }
             }
         }
         stage('Build') {
