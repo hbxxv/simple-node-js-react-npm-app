@@ -31,6 +31,14 @@ def notifySlack(text, channel, attachments) {
 }
 
 def slackNotificationChannel = "spam"
+def message = ""
+def getLastCommitMessage = {
+    message = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
+}
+
+def populateGlobalVariables = {
+    getLastCommitMessage()
+}
 
 pipeline {
     agent {
