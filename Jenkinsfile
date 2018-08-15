@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
             CI = true
-            REVISION_ID = '$BUILD_NUMBER-$GIT_COMMI'T
+            REVISION_ID = '$BUILD_NUMBER-$GIT_COMMIT'
         }
     stages {
         stage('Build & Test') {
