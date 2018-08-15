@@ -50,6 +50,10 @@ pipeline {
         stage('Intiliaze') {
             steps {
                 sh "apk update && apk add curl"
+                echo ${message}
+                echo ${env.message}
+                echo ${author}
+                echo ${env.author}
             }
         }
         stage('Build') {
@@ -89,13 +93,13 @@ pipeline {
                 "mrkdwn_in": ["fields"],
                 fields: [
                     [
-                        title: "Branch",
+                        title: "Branch:",
                         value: "${env.GIT_BRANCH}",
                         short: true
                     ],
                     [
-                        title: "Last Commit",
-                        value: "${message}",
+                        title: "Last Commit:",
+                        value: "${env.message}",
                         short: false
                     ]
                 ]
