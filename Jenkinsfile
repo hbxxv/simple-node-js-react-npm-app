@@ -44,30 +44,23 @@ pipeline {
             REVISION_ID = "${env.BUILD_NUMBER}-${env.GIT_COMMIT}"
         }
     stages {
-        stage('Build & Test') {
-            parallel {
-                stage('Build') { 
-                    steps {
-                        sh 'npm install'
-                    }
-                }
-                stage('Test') {
-                    steps {
-                        sh './jenkins/scripts/test.sh'
-                    }
-                }
+        stage('Intiliaze') {
+            steps {
+                sh "apk update && apk add curl"
             }
         }
-        stage('Deliver-DEV') {
+        stage('Build') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Test') {
             when {
-                branch 'DEV'
+                branch 'master'
             }
             steps {
-                sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
+                sh './jenkins/scripts/test.sh'
             }
-            
         }
         stage('Deliver-Master') {
             when {
@@ -83,7 +76,28 @@ pipeline {
     post {
         always {
             echo 'I will always say Hello again!'
-            notifySlack("Success!", slackNotificationChannel, [])
+            //notifySlack("Success!", slackNotificationChannel, [])
+            notifySlack("", slackNotificationChannel, [
+            [
+                title: "${env.JOB_NAME}, build #${env.BUILD_NUMBER}",
+                title_link: "${env.BUILD_URL}",
+                color: "danger",
+                author_name: "${author}",
+                text: "${buildResult}",
+                fields: [
+                    [
+                        title: "Branch",
+                        value: "${env.GIT_BRANCH}",
+                        short: true
+                    ],
+                    [
+                        title: "Last Commit",
+                        value: "${message}",
+                        short: false
+                    ]
+                ]
+            ]
+            ])
         }
    }
 }
