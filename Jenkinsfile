@@ -56,15 +56,6 @@ pipeline {
                         sh './jenkins/scripts/test.sh'
                     }
                 }
-		stage('Print Info') {
-		   steps {
-			echo "${REVISION_ID}"
-			echo "${env.REVISION_ID}"
-			echo "${env.BUILD_NUMBER}"
-			echo "${env.GIT_COMMIT}"
-            sh "apk update && apk add curl"
-		   }
-		}
             }
         }
         stage('Deliver-DEV') {
@@ -83,43 +74,16 @@ pipeline {
                 branch 'master'
             }
             steps {
-                //script {
-                    //env['GIT_MSG'] = sh(script: "git log --pretty=%s -1", returnStdout: true).trim()
-                    //env['GIT_MSG'] = sh 'git log --pretty=%s -1 | xargs echo'
-                    //env['GIT_COMMIT'] = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
-                    //env['GIT_AUTHOR'] = sh(script: "git --no-pager show -s --format='%an' \${GIT_COMMIT}", returnStdout: true).trim()
-                //}
                 sh './jenkins/scripts/deliver.sh'
                 //input message: 'Finished using the web site? (Click "Proceed" to continue)'
                 sh './jenkins/scripts/kill.sh'
-                //echo "The commit \${GIT_COMMIT} was authored by \${GIT_AUTHOR}. Commit message was \"\${GIT_MSG}\""
             }    
         }
     }
     post {
         always {
             echo 'I will always say Hello again!'
-            notifySlack("", slackNotificationChannel, [
-                [
-                    title: "${env.JOB_NAME}, build #${env.BUILD_NUMBER}",
-                    title_link: "${env.BUILD_URL}",
-                    color: "danger",
-                    author_name: "${env.GIT_COMMITTER_NAME}",
-                    text: "${env.buildResult}",
-                    fields: [
-                        [
-                            title: "Branch",
-                            value: "${env.GIT_BRANCH}",
-                            short: true
-                        ],
-                        [
-                            title: "Last Commit",
-                            value: "TEST",
-                            short: false
-                        ]
-                    ]
-                ]
-            ])
+            notifySlack("Success!", slackNotificationChannel, [])
         }
    }
 }
