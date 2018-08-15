@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
             CI = true
-            REVISION_ID = '${env.BUILD_NUMBER}-${env.GIT_COMMIT}'
+            REVISION_ID = "${env.BUILD_NUMBER}-${env.GIT_COMMIT}"
         }
     stages {
         stage('Build & Test') {
@@ -25,7 +25,9 @@ pipeline {
 		stage('Print Info') {
 		   steps {
 			echo "${REVISION_ID}"
-			echo "${env.BUILD_NUMBER}"	
+			echo "${env.REVISION_ID}"
+			echo "${env.BUILD_NUMBER"
+			echo "${env.GIT_COMMIT}"
 		   }
 		}
             }
