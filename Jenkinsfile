@@ -24,7 +24,8 @@ pipeline {
                 }
 		stage('Print Info') {
 		   steps {
-			sh 'echo $REVISION_ID'	
+			echo "${REVISION_ID}"
+			echo "${env.BUILD_NUMBER}"	
 		   }
 		}
             }
