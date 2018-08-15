@@ -1,20 +1,11 @@
-def slackNotifier(String buildResult) {
-  if ( buildResult == "SUCCESS" ) {
-    slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} committed by ${env.GIT_COMMITTER_NAME} was successful, link ${env.BUILD_URL}"
-  }
-  else if( buildResult == "FAILURE" ) { 
-    slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} committed by ${env.GIT_COMMITTER_NAME} was failed, link ${env.BUILD_URL}"
-  }
-  else if( buildResult == "UNSTABLE" ) { 
-    slackSend color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} committed by ${env.GIT_COMMITTER_NAME} was unstable, link ${env.BUILD_URL}"
-  }
-  else {
-    slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} committed by ${env.GIT_COMMITTER_NAME} its resulat was unclear, link ${env.BUILD_URL}"
-  }
-}
-
 import groovy.json.JsonOutput
+import java.util.Optional
+import hudson.model.Actionable
+import hudson.tasks.junit.CaseResult
 
+def slackNotificationChannel = "spam"
+def message = ""
+def author = ""
 
 def notifySlack(text, channel, attachments) {
     def slackURL = 'https://hooks.slack.com/services/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'
@@ -29,10 +20,6 @@ def notifySlack(text, channel, attachments) {
 
     sh "curl -X POST --data-urlencode \'payload=${payload}\' ${slackURL}"
 }
-
-def slackNotificationChannel = "spam"
-def message = ""
-def author = ""
 
 def getGitAuthor = {
     def commit = sh(returnStdout: true, script: 'git rev-parse HEAD')
@@ -98,8 +85,9 @@ pipeline {
                 title: "${env.JOB_NAME}, build #${env.BUILD_NUMBER}",
                 title_link: "${env.BUILD_URL}",
                 color: "danger",
-                author_name: "${author}",
+                author_name: "${buildStatus}\n${author}",
                 text: "${currentBuild.currentResult}",
+                "mrkdwn_in": ["fields"],
                 fields: [
                     [
                         title: "Branch",
