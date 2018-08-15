@@ -7,6 +7,7 @@ pipeline {
     }
     environment {
             CI = true
+            REVISION_ID = '$BUILD_NUMBER-$GIT_COMMI'T
         }
     stages {
         stage('Build & Test') {
@@ -23,8 +24,6 @@ pipeline {
                 }
 		stage('Print Info') {
 		   steps {
-			sh 'echo $BUILD_NUMBER-$GIT_COMMIT'
-			sh 'export REVISION_ID=$BUILD_NUMBER-$GIT_COMMIT'
 			sh 'echo $REVISION_ID'	
 		   }
 		}
