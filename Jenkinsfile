@@ -30,11 +30,6 @@ pipeline {
 		}
             }
         }
-        stage('Sonar-Anal') {
-            when {
-                anyOf { branch 'master'; branch 'DEV'; branch 'Staging'}
-            }
-        }
         stage('Deliver-DEV') {
             when {
                 branch 'DEV'
