@@ -82,7 +82,7 @@ pipeline {
                 title: "${env.JOB_NAME}, build #${env.BUILD_NUMBER}",
                 title_link: "${env.BUILD_URL}",
                 color: "danger",
-                author_name: "${author}",
+                author_name: "${env.GIT_COMMITTER_NAME}",
                 text: "${buildResult}",
                 fields: [
                     [
