@@ -85,7 +85,7 @@ pipeline {
                 title: "${env.JOB_NAME}, build #${env.BUILD_NUMBER}",
                 title_link: "${env.BUILD_URL}",
                 color: "danger",
-                author_name: "${buildStatus}\n${author}",
+                author_name: "${author}",
                 text: "${currentBuild.currentResult}",
                 "mrkdwn_in": ["fields"],
                 fields: [
