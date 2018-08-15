@@ -13,23 +13,6 @@ def slackNotifier(String buildResult) {
   }
 }
 
-import groovy.json.JsonOutput
-
-
-def notifySlack(text, channel, attachments) {
-    def slackURL = 'https://hooks.slack.com/services/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'
-    def jenkinsIcon = 'https://wiki.jenkins-ci.org/download/attachments/2916393/logo.png'
-
-    def payload = JsonOutput.toJson([text: text,
-        channel: spam,
-        username: "Jenkins",
-        icon_url: jenkinsIcon,
-        attachments: attachments
-    ])
-
-    sh "curl -X POST --data-urlencode \'payload=${payload}\' ${slackURL}"
-}
-
 pipeline {
     agent {
         docker {
@@ -95,31 +78,10 @@ pipeline {
     }
     post {
         always {
-            /* Use slackNotifier.groovy from shared library and provide current build result as parameter */
-            echo 'I will always say Hello again!'
-            //slackNotifier(currentBuild.currentResult)
-            notifySlack("", slackNotificationChannel, [
-                [
-                    title: "${env.JOB_NAME}, build #${env.BUILD_NUMBER}",
-                    title_link: "${env.BUILD_URL}",
-                    color: "danger",
-                    author_name: "${env.GIT_COMMITTER_NAME}",
-                    text: "${env.buildResult}",
-                    fields: [
-                        [
-                            title: "Branch",
-                            value: "${env.GIT_BRANCH}",
-                            short: true
-                        ],
-                        [
-                            title: "Last Commit",
-                            value: "TEST",
-                            short: false
-                        ]
-                    ]
-                ]
-            ]
-            cleanWs()
+           /* Use slackNotifier.groovy from shared library and provide current build result as parameter */
+           echo 'I will always say Hello again!'
+           slackNotifier(currentBuild.currentResult)
+           cleanWs()
         }
    }
 }
