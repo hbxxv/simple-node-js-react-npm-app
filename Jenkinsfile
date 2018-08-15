@@ -62,6 +62,7 @@ pipeline {
 			echo "${env.REVISION_ID}"
 			echo "${env.BUILD_NUMBER}"
 			echo "${env.GIT_COMMIT}"
+            sh "apk update && apk add curl"
 		   }
 		}
             }
