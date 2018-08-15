@@ -49,7 +49,7 @@ pipeline {
     stages {
         stage('Intiliaze') {
             steps {
-                sh "apk update && apk add curl"
+                sh "apk update && apk add curl git"
                 script {
                     populateGlobalVariables()
                 }
