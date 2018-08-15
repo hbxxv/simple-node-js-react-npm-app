@@ -26,7 +26,7 @@ pipeline {
 		   steps {
 			echo "${REVISION_ID}"
 			echo "${env.REVISION_ID}"
-			echo "${env.BUILD_NUMBER"
+			echo "${env.BUILD_NUMBER}"
 			echo "${env.GIT_COMMIT}"
 		   }
 		}
