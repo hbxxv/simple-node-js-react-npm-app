@@ -14,13 +14,14 @@ pipeline {
     stages {
         stage('Intiliaze') {
             steps {
-                sh "apk update && apk add curl git"
+                //sh "apk update && apk add curl git"
+                echo "Skip"
             }
         }
         stage('Build') {
             steps {
-                sh 'npm install'
-                sh 'npm install react-scripts'
+                //sh 'npm install'
+                //sh 'npm install react-scripts'
             }
         }
         stage('Test') {
@@ -29,7 +30,8 @@ pipeline {
             }
             steps {
                 echo "Skip Test"
-                sh './jenkins/scripts/test.sh'
+                //sh './jenkins/scripts/test.sh'
+
             }
         }
         stage('Deliver-Master') {
@@ -37,9 +39,10 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
+                echo "Skip"
+                //sh './jenkins/scripts/deliver.sh'
+                //input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                //sh './jenkins/scripts/kill.sh'
             }    
         }
     }
