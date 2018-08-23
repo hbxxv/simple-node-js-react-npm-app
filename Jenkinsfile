@@ -52,7 +52,6 @@ pipeline {
         always {
             echo 'I will always say Hello again!'
             notifySlack()
-            Slack(com.me.Slack.notifySlack())
         }
    }
 }
