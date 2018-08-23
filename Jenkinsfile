@@ -1,4 +1,4 @@
-@Library("jenkins-shared-library@release")
+@Library("jenkins-shared-library@master")
 import com.me.*
 
 
