@@ -55,28 +55,7 @@ pipeline {
         always {
             echo 'I will always say Hello again!'
             script {
-            Slack.notifySlack("", slackNotificationChannel, [
-            [
-                title: "${env.JOB_NAME}, build #${env.BUILD_NUMBER}",
-                title_link: "${env.BUILD_URL}",
-                color: "danger",
-                author_name: "${author}",
-                text: "${currentBuild.currentResult}",
-                "mrkdwn_in": ["fields"],
-                fields: [
-                    [
-                        title: "Branch:",
-                        value: "${env.GIT_BRANCH}",
-                        short: true
-                    ],
-                    [
-                        title: "Last Commit:",
-                        value: "${message}",
-                        short: false
-                    ]
-                ]
-            ]
-            ])
+            Slack.notifySlack()
             }
         }
    }
