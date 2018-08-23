@@ -1,28 +1,5 @@
 @Library("jenkins-shared-library@master")_
 
-import groovy.json.JsonOutput
-
-// instantiate
-def slackNotificationChannel = "spam"
-def message = ""
-def author = ""
-
-
-def notifySlack(text, channel, attachments) {
-    def slackURL = 'https://hooks.slack.com/services/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'
-    def jenkinsIcon = 'https://wiki.jenkins-ci.org/download/attachments/2916393/logo.png'
-
-    def payload = JsonOutput.toJson([text: text,
-        channel: channel,
-        username: "Jenkins",
-        icon_url: jenkinsIcon,
-        attachments: attachments
-    ])
-
-    sh "curl -X POST --data-urlencode \'payload=${payload}\' ${slackURL}"
-}
-
-
 pipeline {
     agent {
         docker {
@@ -72,28 +49,7 @@ pipeline {
     post {
         always {
             echo 'I will always say Hello again!'
-            notifySlack("", slackNotificationChannel, [
-            [
-                title: "${env.JOB_NAME}, build #${env.BUILD_NUMBER}",
-                title_link: "${env.BUILD_URL}",
-                color: "danger",
-                author_name: "${author}",
-                text: "${currentBuild.currentResult}",
-                "mrkdwn_in": ["fields"],
-                fields: [
-                    [
-                        title: "Branch:",
-                        value: "${env.GIT_BRANCH}",
-                        short: true
-                    ],
-                    [
-                        title: "Last Commit:",
-                        value: "${message}",
-                        short: false
-                    ]
-                ]
-            ]
-            ])
+            Slack()
         }
    }
 }
