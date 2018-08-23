@@ -1,7 +1,4 @@
 @Library("jenkins-shared-library@master")
-import com.me.*
-
-
 // instantiate
 
 pipeline {
@@ -51,7 +48,7 @@ pipeline {
     post {
         always {
             echo 'I will always say Hello again!'
-            notifySlack()
+            Slack(notifySlack())
         }
    }
 }
