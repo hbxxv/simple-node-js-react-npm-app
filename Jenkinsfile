@@ -53,7 +53,7 @@ pipeline {
         always {
             echo 'I will always say Hello again!'
             script {
-              Slack.notifySlack()
+              Slack.notifySlack("","","")
             }
         }
    }
