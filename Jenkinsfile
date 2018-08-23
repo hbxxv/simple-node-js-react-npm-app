@@ -19,7 +19,7 @@ pipeline {
             steps {
                 sh "apk update && apk add curl git"
                 script {
-                  Slack.populateGlobalVariables
+                  Slack.populateGlobalVariables()
                 }
             }
         }
@@ -53,7 +53,7 @@ pipeline {
         always {
             echo 'I will always say Hello again!'
             script {
-              Slack.notifySlack
+              Slack.notifySlack()
             }
         }
    }
