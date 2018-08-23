@@ -18,7 +18,7 @@ pipeline {
         stage('Intiliaze') {
             steps {
                 sh "apk update && apk add curl git"
-                populateGlobalVariables()
+                Slack.populateGlobalVariables
             }
         }
         stage('Build') {
@@ -50,7 +50,7 @@ pipeline {
     post {
         always {
             echo 'I will always say Hello again!'
-            notifySlack()
+            Slack.notifySlack
         }
    }
 }
