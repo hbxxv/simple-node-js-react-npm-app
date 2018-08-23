@@ -1,6 +1,7 @@
 @Library("jenkins-shared-library@master")_
 
 // instantiate
+def slackNotificationChannel = "spam"
 
 pipeline {
     agent {
