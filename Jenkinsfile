@@ -22,6 +22,7 @@ pipeline {
             steps {
                 //sh 'npm install'
                 //sh 'npm install react-scripts'
+                echo "Skip"
             }
         }
         stage('Test') {
