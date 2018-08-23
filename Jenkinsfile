@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Intiliaze') {
             steps {
-                //sh "apk update && apk add curl git"
+                sh "apk update && apk add curl git"
                 echo "Skip"
             }
         }
