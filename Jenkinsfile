@@ -15,9 +15,6 @@ pipeline {
         stage('Intiliaze') {
             steps {
                 sh "apk update && apk add curl git"
-                script {
-                  Slack.populateGlobalVariables()
-                }
             }
         }
         stage('Build') {
