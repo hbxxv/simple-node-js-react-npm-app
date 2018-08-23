@@ -1,4 +1,5 @@
 @Library("jenkins-shared-library@master")_
+import java.util.Optional
 
 // instantiate
 def slackNotificationChannel = "spam"
