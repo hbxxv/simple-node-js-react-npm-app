@@ -1,5 +1,4 @@
-@Library("jenkins-shared-library@master")
-import Slack
+@Library("jenkins-shared-library@master")_
 
 // instantiate
 
@@ -52,9 +51,7 @@ pipeline {
     post {
         always {
             echo 'I will always say Hello again!'
-            script {
-              Slack.notifySlack("")
-            }
+            slackNotifier(currentBuild.currentResult)
         }
    }
 }
