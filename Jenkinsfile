@@ -2,6 +2,8 @@
 
 // instantiate
 def slackNotificationChannel = "spam"
+def message = ""
+def author = ""
 
 pipeline {
     agent {
