@@ -3,7 +3,7 @@ import com.me.*
 
 
 // instantiate
-slack = new slack()
+sl = new slack()
 
 pipeline {
     agent {
@@ -21,7 +21,7 @@ pipeline {
             steps {
                 sh "apk update && apk add curl git"
                 script {
-                    slack.populateGlobalVariables()
+                    sl.populateGlobalVariables()
                 }
             }
         }
@@ -54,7 +54,7 @@ pipeline {
     post {
         always {
             echo 'I will always say Hello again!'
-            slack.notifySlack("", slackNotificationChannel, [
+            sl.notifySlack("", slackNotificationChannel, [
             [
                 title: "${env.JOB_NAME}, build #${env.BUILD_NUMBER}",
                 title_link: "${env.BUILD_URL}",
