@@ -1,5 +1,5 @@
 @Library("jenkins-shared-library@master")
-import com.me.*
+import Slack
 
 // instantiate
 
